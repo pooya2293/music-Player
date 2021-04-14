@@ -7,8 +7,11 @@ const audio = document.querySelector('#audio');
 const progress = document.querySelector('.progress');
 const progressContainer = document.querySelector('.progress-container');
 const title = document.querySelector('#title');
+const currTime = document.querySelector('#currTime');
+const durTime = document.querySelector('#durTime');
 
-const songs = ['hey', 'summer', 'ukulele','Imagine Dragons  - Believer','Frog-Series'];
+
+const songs = ['hey', 'summer', 'ukulele','Believer','Frog-Series'];
 
 let songIndex = 2;
 
@@ -65,10 +68,42 @@ function updateProgress (e){
 function setProgress(e) {
 	const width = this.clientWidth;
 	const clickX = e.offsetX;
-	const duration = audio.duration;
+	var duration = audio.duration;
 	audio.currentTime = (clickX / width) * duration;	
 }
 
+function DurTime (e){
+	const {duration,currentTime} = e.srcElement;
+	var sec;
+	// define minutes
+	let min = (currentTime==null)? 0:
+	 Math.floor(currentTime/60);
+	 min = min <10 ? '0'+min:min;
+
+	// define seconds
+	function get_sec (x){
+		if(Math.floor(x) > 60){
+			
+			for (var i = 1; i<=60; i++){
+				if( Math.floor(x)>=(60*i)){
+					sec = Math.floor(x) - (60*i);
+					sec = sec <10 ? '0'+sec:sec;
+				}
+			}
+		}else{
+		 	sec = Math.floor(x);
+		 	sec = sec <10 ? '0'+sec:sec;
+		 }
+	}
+
+	// sec = sec <10 ? '0'+sec:sec;  
+
+	get_sec (currentTime);
+
+	currTime.innerHTML = min +':'+ sec;
+	
+	
+};
 /******************************/
 loadSong (songs[songIndex]);
 
@@ -90,3 +125,7 @@ prevBtn.addEventListener('click' , prevSong);
 audio.addEventListener('timeupdate',updateProgress);
 
 progressContainer.addEventListener('click', setProgress);
+
+audio.addEventListener('timeupdate',DurTime);
+// DurTime ();
+// CurrTime ();

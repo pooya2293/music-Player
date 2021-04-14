@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 	<link rel="stylesheet" href="style.css">
+	<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 	<title>music player</title>
 </head>
 <body>
@@ -15,6 +16,11 @@
 			<div class="progress-container">
 				<div class="progress"></div>
 			</div>
+			<div class="Time-container">
+				<div id="currTime">00:15</div>
+				<div id="durTime">02:35</div>
+			</div>
+			
 		</div>
 
 		<audio src="music/ukulele.mp3" id="audio"></audio>
