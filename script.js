@@ -8,7 +8,7 @@ const progress = document.querySelector('.progress');
 const progressContainer = document.querySelector('.progress-container');
 const title = document.querySelector('#title');
 
-const songs = ['hey', 'summer', 'ukulele'];
+const songs = ['hey', 'summer', 'ukulele','Imagine Dragons  - Believer','Frog-Series'];
 
 let songIndex = 2;
 
@@ -62,7 +62,12 @@ function updateProgress (e){
 	progress.style.width = `${progressPresent}%`;
 }
 
-
+function setProgress(e) {
+	const width = this.clientWidth;
+	const clickX = e.offsetX;
+	const duration = audio.duration;
+	audio.currentTime = (clickX / width) * duration;	
+}
 
 /******************************/
 loadSong (songs[songIndex]);
@@ -83,3 +88,5 @@ nextBtn.addEventListener('click' , nextSong);
 prevBtn.addEventListener('click' , prevSong);
 
 audio.addEventListener('timeupdate',updateProgress);
+
+progressContainer.addEventListener('click', setProgress);
