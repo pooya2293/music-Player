@@ -10,7 +10,7 @@ const title = document.querySelector('#title');
 
 const songs = ['hey', 'summer', 'ukulele'];
 
-const songIndex = 2;
+let songIndex = 2;
 
 /* update song details cover image and sorse of image & audio */
 
@@ -34,14 +34,42 @@ function pauseSong () {
 	audio.pause();
 }
 
+function nextSong () {
+
+	songIndex ++;
+	if ( (songs.length - 1) < songIndex ){ 
+		songIndex = 0;}
+
+	loadSong(songs[songIndex]);
+
+	playSong();
+
+};
+
+function prevSong () {
+	songIndex --;
+	if ( songIndex < 0 ){ 
+		songIndex = songs.length - 1;}
+
+	loadSong(songs[songIndex]);
+
+	playSong();
+}
+
+function updateProgress (e){
+	const {duration , currentTime} = e.srcElement;
+	const progressPresent = (currentTime / duration) *100; 
+	progress.style.width = `${progressPresent}%`;
+}
+
+
+
 /******************************/
 loadSong (songs[songIndex]);
 
 playBtn.addEventListener('click' , () => {
 
 const isplaying = musicContainer.classList.contains('play');
-
-
 
 if(isplaying) {
 	pauseSong ();
@@ -50,3 +78,8 @@ if(isplaying) {
 }
 
 });
+
+nextBtn.addEventListener('click' , nextSong);
+prevBtn.addEventListener('click' , prevSong);
+
+audio.addEventListener('timeupdate',updateProgress);
