@@ -13,7 +13,7 @@ const durTime = document.querySelector('#durTime');
 
 const songs = ['hey', 'summer', 'ukulele','Believer','Frog-Series'];
 
-let songIndex = 2;
+let songIndex = 4;
 
 /* update song details cover image and sorse of image & audio */
 
@@ -74,7 +74,8 @@ function setProgress(e) {
 
 function DurTime (e){
 	const {duration,currentTime} = e.srcElement;
-	var sec;
+	let sec;
+
 	// define minutes
 	let min = (currentTime==null)? 0:
 	 Math.floor(currentTime/60);
@@ -82,10 +83,10 @@ function DurTime (e){
 
 	// define seconds
 	function get_sec (x){
-		if(Math.floor(x) > 60){
+		if(Math.floor(x) >= 60){
 			
 			for (var i = 1; i<=60; i++){
-				if( Math.floor(x)>=(60*i)){
+				if(Math.floor(x)>=(60*i) && Math.floor(x)<(60*(i+1))) {
 					sec = Math.floor(x) - (60*i);
 					sec = sec <10 ? '0'+sec:sec;
 				}
@@ -94,17 +95,16 @@ function DurTime (e){
 		 	sec = Math.floor(x);
 		 	sec = sec <10 ? '0'+sec:sec;
 		 }
-	}
-
-	// sec = sec <10 ? '0'+sec:sec;  
+	} 
 
 	get_sec (currentTime);
 
 	currTime.innerHTML = min +':'+ sec;
-	
-	
+		
 };
+
 /******************************/
+
 loadSong (songs[songIndex]);
 
 playBtn.addEventListener('click' , () => {
@@ -127,5 +127,5 @@ audio.addEventListener('timeupdate',updateProgress);
 progressContainer.addEventListener('click', setProgress);
 
 audio.addEventListener('timeupdate',DurTime);
-// DurTime ();
-// CurrTime ();
+
+audio.addEventListener('ended',nextSong)
